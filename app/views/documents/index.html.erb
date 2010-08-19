@@ -1,0 +1,18 @@
+
+<p>
+  This is our documents index page.
+</p>
+
+<code>
+  <%= @documents.inspect %>
+</code>
+
+<% unless @documents['results'].blank? %>
+
+  <% for document in @documents['results'] %>
+    <p>
+      <%= document['name'] %>
+    </p>
+  <% end %>
+
+<% end %>

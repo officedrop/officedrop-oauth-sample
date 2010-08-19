@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>
+      OfficeDrop Oauth Application
+    </title>
+  </head>
+  <body>
+
+    <h1> OfficeDrop OAuth Sample application </h1>
+
+    <% unless flash.blank? %>
+      <% flash.each do |key, value|  %>
+        <p> <%= "#{key} - #{value}"  %>  </p>
+      <% end %>
+    <% end %>
+
+    <%= yield %>
+
+  </body>
+</htm
