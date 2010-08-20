@@ -22,7 +22,7 @@ class CreateOauthConsumerTokens < ActiveRecord::Migration
       :name => 'officedrop',
       :key => "c2FDDdoAjQ1fQIXH228h",
       :secret => "b0D6LkpqLX7x1UDFEBYvQjgW8cfqYn9fD8Qn7OGj",
-      :site => 'http://localhost:3000'
+      :site => 'https://www.officedrop.com'
     )
 
     create_table :consumer_tokens do |t|
