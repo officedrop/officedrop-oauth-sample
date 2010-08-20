@@ -37,7 +37,7 @@ module OauthHelper
       return
     end
 
-    response = get( '/user', token )
+    response = get( '/user', :access_token => token )
     user = User.find_by_officedrop_id( response['id'] )
 
     unless user
@@ -66,17 +66,72 @@ module OauthHelper
   end
 
   def officedrop_host
-    "http://localhost:3000/"
+    OauthApplication.officedrop.site
   end
 
   def build_url( path )
-    result = "#{officedrop_host}ze/api#{path}.json"
+    result = "#{officedrop_host}/ze/api#{path}.json"
     result
   end
 
-  def get( path, token = self.access_token )
-    response = token.get( build_url( path ) )
+  def get( path, options = {}, headers = {} )
+    http_action( :get, path, options, headers )
+  end
+
+  def post( path, options = {}, headers = {} )
+    http_action( :post, path, options, headers )
+  end
+
+  def http_action( method, path, parameters = {}, headers = {} )
+    token    = self.access_token || parameters.delete(:access_token)
+    response = case method
+    when :get, :delete
+      parameters.delete_if { |k,v| v.blank? }
+      query_string = parameters.map { |k,v| "#{k}=#{uri_escape(v)}" }.join( "&" )
+      token.send( method, build_url( path ) << '?' << query_string, headers )
+    else
+      token.send( method, build_url( path ), parameters, headers )
+    end
     JSON.parse(response.body)
+  end
+
+  def uri_escape( value )
+    URI.escape(value.to_s, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+  end
+
+  def http_multipart_data(params)
+    crlf = "\r\n"
+    body = ""
+    headers = {}
+
+    boundary = Time.now.to_i.to_s(16)
+
+    headers["Content-Type"] = "multipart/form-data; boundary=#{boundary}"
+    params.each do |key,value|
+      esc_key = OAuth::Helper.escape(key.to_s)
+      body << "--#{boundary}#{crlf}"
+
+      if value.respond_to?( :content_type ) && value.respond_to?( :original_filename )
+        mime_type = MIME::Types.type_for(value.original_filename)[0] ||
+          MIME::Types["application/octet-stream"][0]
+        body << "Content-Disposition: form-data; name=\"#{esc_key}\"; "
+        body << "filename=\"#{File.basename(value.original_filename)}\"#{crlf}"
+        body << "Content-Type: #{mime_type.simplified}#{crlf*2}"
+        body << value.read
+      elsif value.respond_to?(:read)
+        mime_type = MIME::Types.type_for(value.path)[0] || MIME::Types["application/octet-stream"][0]
+        body << "Content-Disposition: form-data; name=\"#{esc_key}\"; filename=\"#{File.basename(value.path)}\"#{crlf}"
+        body << "Content-Type: #{mime_type.simplified}#{crlf*2}"
+        body << value.read
+      else
+        body << "Content-Disposition: form-data; name=\"#{esc_key}\"#{crlf*2}#{value}"
+      end
+    end
+
+    body << "--#{boundary}--#{crlf*2}"
+    headers["Content-Length"] = body.size.to_s
+
+    return [ body, headers ]
   end
 
 end

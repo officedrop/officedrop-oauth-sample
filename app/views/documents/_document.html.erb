@@ -1,0 +1,10 @@
+<div class="document">
+  <p>
+    <%= officedrop_image_tag document['cover']['thumbnail'] %>
+    <br/>
+    <strong><%= document['name'] %></strong>
+    - at folder <em><%= document['folder']['name'] %></em>
+    <br/>
+    <%= link_to 'View full document', document_path( document['id'] ) %>
+  </p>
+</div>

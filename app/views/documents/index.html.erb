@@ -1,18 +1,30 @@
+<div id="batches"></div>
 
-<p>
-  This is our documents index page.
-</p>
+<%= render 'upload' %>
 
-<code>
-  <%= @documents.inspect %>
-</code>
+<%= render 'search' %>
 
 <% unless @documents['results'].blank? %>
 
+  <p>
+    You are at page <%= @documents['pagination']['current_page'] %>
+    of <%= @documents['pagination']['total_pages'] %>.<br/>
+    Showing <%= @documents['results'].size %> of
+    <%= @documents['pagination']['total_entries'] %> documents.
+  </p>
+
+  <p> <%= pagination @documents %> </p>
+
+  <br class="clear"/>
+
   <% for document in @documents['results'] %>
-    <p>
-      <%= document['name'] %>
-    </p>
+    <%= render 'document', :document => document %>
   <% end %>
 
+<% else %>
+  <p>
+    Your account doesn't have any documents yet or your seach did not return any results.
+  </p>
 <% end %>
+
+<%= render 'batches_javascript' %>

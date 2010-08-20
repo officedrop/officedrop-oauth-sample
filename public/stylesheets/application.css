@@ -1,0 +1,23 @@
+.document {
+  padding: 5px;
+  margin: 5px;
+  border-color: black;
+  border-width: 2px;
+  border-style: outset;
+  float: left;
+}
+
+.document img {
+  border-width: 1px;
+  border-style: solid;
+}
+
+br.clear {
+  clear: both;
+}
+
+img.document_page {
+  border-width: 1px;
+  border-style: solid;
+  float: left;
+}

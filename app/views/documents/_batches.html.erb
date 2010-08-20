@@ -1,0 +1,11 @@
+<% unless @batches['results'].blank? %>
+  <h2>Batches being processed</h2>
+  <ul>
+    <% for batch in @batches['results']  %>
+      <li>
+        <%= batch['name'] %> - <%= batch['batch_status'] %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+

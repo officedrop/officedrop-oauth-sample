@@ -1,0 +1,14 @@
+<script type="text/javascript">
+
+  function showPendingBatches(){
+    jQuery.ajax({
+      url: '/documents/pending',
+      dataType: 'script'
+    });
+  }
+
+  jQuery( document ).ready( function () {
+    showPendingBatches();
+    setInterval( showPendingBatches , 60000);
+  });
+</script>

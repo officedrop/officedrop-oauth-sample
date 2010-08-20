@@ -1,0 +1,5 @@
+<% 1.upto( @document['page_count'] ) do |page|  %>
+
+  <%= page_image_tag( @document['id'], page ) %>
+
+<% end %>

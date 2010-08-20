@@ -1,8 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => 'documents', :action => 'index'
-  map.resources :documents
+  map.resources :documents, :collection => {:pending => :get}
   map.resource :session, :member => { :authorize => :get }
+  map.resources :assets
 
 
   # The priority is based upon order of creation: first created -> highest priority.
