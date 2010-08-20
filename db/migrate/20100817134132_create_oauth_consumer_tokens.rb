@@ -22,10 +22,11 @@ class CreateOauthConsumerTokens < ActiveRecord::Migration
       :name => 'officedrop',
       :key => "c2FDDdoAjQ1fQIXH228h",
       :secret => "b0D6LkpqLX7x1UDFEBYvQjgW8cfqYn9fD8Qn7OGj",
+      #:site  => 'http://localhost:3000'
       :site => 'https://www.officedrop.com'
     )
 
-    create_table :consumer_tokens do |t|
+    create_table :oauth_tokens do |t|
       t.integer :oauth_application_id
       t.integer :user_id
       t.string  :type, :limit => 30
@@ -37,7 +38,7 @@ class CreateOauthConsumerTokens < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :consumer_tokens, :user_id
+    add_index :oauth_tokens, :user_id
 
     create_table :users do |t|
       t.integer :officedrop_id
@@ -49,7 +50,9 @@ class CreateOauthConsumerTokens < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :consumer_tokens
+    drop_table :oauth_applications
+    drop_table :oauth_tokens
+    drop_table :users
   end
 
 end

@@ -1,3 +1,3 @@
-class AccessToken < ConsumerToken
+class AccessToken < OauthToken
 
 end

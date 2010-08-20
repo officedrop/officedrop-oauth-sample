@@ -11,21 +11,6 @@
 
 ActiveRecord::Schema.define(:version => 20100817134132) do
 
-  create_table "consumer_tokens", :force => true do |t|
-    t.integer  "oauth_application_id"
-    t.integer  "user_id"
-    t.string   "type",                 :limit => 30
-    t.string   "token",                :limit => 1024
-    t.string   "edam_shard"
-    t.string   "authorize_url"
-    t.string   "secret"
-    t.string   "verifier"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "consumer_tokens", ["user_id"], :name => "index_consumer_tokens_on_user_id"
-
   create_table "oauth_applications", :force => true do |t|
     t.string "name",               :null => false
     t.string "key",                :null => false
@@ -39,6 +24,21 @@ ActiveRecord::Schema.define(:version => 20100817134132) do
   end
 
   add_index "oauth_applications", ["name"], :name => "index_oauth_applications_on_name"
+
+  create_table "oauth_tokens", :force => true do |t|
+    t.integer  "oauth_application_id"
+    t.integer  "user_id"
+    t.string   "type",                 :limit => 30
+    t.string   "token",                :limit => 1024
+    t.string   "edam_shard"
+    t.string   "authorize_url"
+    t.string   "secret"
+    t.string   "verifier"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "oauth_tokens", ["user_id"], :name => "index_oauth_tokens_on_user_id"
 
   create_table "users", :force => true do |t|
     t.integer  "officedrop_id"

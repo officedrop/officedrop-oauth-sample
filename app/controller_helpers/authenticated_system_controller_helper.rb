@@ -1,5 +1,5 @@
 
-module AuthenticatedSystem
+module AuthenticatedSystemControllerHelper
 
   protected
 

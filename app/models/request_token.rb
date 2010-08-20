@@ -1,2 +1,2 @@
-class RequestToken < ConsumerToken
+class RequestToken < OauthToken
 end
