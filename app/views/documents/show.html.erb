@@ -1,3 +1,9 @@
+<p>
+  <%= link_to( "Download this document", assets_path( :path => @document["download"] ) ) %>
+</p>
+
+<br/>
+
 <% 1.upto( @document['page_count'] ) do |page|  %>
 
   <%= page_image_tag( @document['id'], page ) %>
