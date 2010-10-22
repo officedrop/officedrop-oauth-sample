@@ -9,7 +9,11 @@ class OauthApplication < ActiveRecord::Base
   def consumer
     @consumer ||= OAuth::Consumer.new( self.key,
       self.secret,
-      :site => self.site)
+      :site => self.site,
+      :request_token_path => self.request_token_path,
+      :access_token_path => self.access_token_path,
+      :authorize_path => self.authorize_path
+      )
   end
 
   class << self

@@ -23,7 +23,10 @@ class CreateOauthConsumerTokens < ActiveRecord::Migration
       :key => "c2FDDdoAjQ1fQIXH228h",
       :secret => "b0D6LkpqLX7x1UDFEBYvQjgW8cfqYn9fD8Qn7OGj",
       #:site  => 'http://localhost:3000'
-      :site => 'https://www.officedrop.com'
+      :site => 'https://www.officedrop.com',
+      :request_token_path => "/ze/oauth/request_token",
+      :access_token_path => "/ze/oauth/access_token",
+      :authorize_path => "/ze/oauth/authorize"
     )
 
     create_table :oauth_tokens do |t|

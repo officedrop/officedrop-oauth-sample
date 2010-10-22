@@ -3,3 +3,4 @@ nbproject/*
 *.pid
 public/system/*
 tmp/*
+.project
